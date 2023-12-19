@@ -43,3 +43,19 @@ test("A game can have one throw", () => {
     expect(bag.isPossibleGame(gameA)).toBe(false)
     expect(bag.isPossibleGame(gameB)).toBe(true)
 })
+
+test("A game can have several throws", () => {
+    const bag = new Bag(0,0,1)
+    const gameA = [
+        {"round": 1, "red": 0 , "green": 0 , "blue": 1},
+        {"round": 2, "red": 1 , "green": 0 , "blue": 1}
+    ]
+
+    const gameB = [
+        {"round": 1, "red": 0 , "green": 0 , "blue": 1},
+        {"round": 2, "red": 0 , "green": 0 , "blue": 1}
+    ]
+
+    expect(bag.isPossibleGame(gameA)).toBe(false)
+    expect(bag.isPossibleGame(gameB)).toBe(true)
+})

@@ -10,8 +10,15 @@ class Bag {
     }
 
     isPossibleGame(game){
-        var round = game["Round 1"]
-        return this.isPossibleThrow(round.red, round.green, round.blue)
+        let rounds = game.length
+        for (let i = 0; i <= rounds ; i++) {
+            let round = game[i]
+            if (!this.isPossibleThrow(round.red, round.green, round.blue)) {
+                return false
+            }
+        }
+
+        return true
     }
 }
 
