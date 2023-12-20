@@ -37,8 +37,12 @@ test("Bag must have at least as many blue balls as game throw", () => {
 
 test("A game can have one throw", () => {
     const bag = new Bag(0,0,1)
-    const gameA = { "Round 1": {"red": 1 , "green": 0 , "blue": 0} }
-    const gameB = { "Round 1": {"red": 0 , "green": 0 , "blue": 1} }
+    const gameA = [
+        {"round": 1, "red": 1 , "green": 0 , "blue": 0}
+    ]
+    const gameB = [
+        {"round": 1, "red": 0 , "green": 0 , "blue": 1}
+    ]
 
     expect(bag.isPossibleGame(gameA)).toBe(false)
     expect(bag.isPossibleGame(gameB)).toBe(true)

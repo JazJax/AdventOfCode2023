@@ -11,7 +11,7 @@ class Bag {
 
     isPossibleGame(game){
         let rounds = game.length
-        for (let i = 0; i <= rounds ; i++) {
+        for (let i = 0; i < rounds ; i++) {
             let round = game[i]
             if (!this.isPossibleThrow(round.red, round.green, round.blue)) {
                 return false
