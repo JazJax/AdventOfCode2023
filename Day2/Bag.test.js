@@ -157,3 +157,30 @@ describe('Parsing input file', () => {
         expect(result[1].rounds[0].green).toBe(8)
     })
 })
+
+describe('Minimum power tests', () => {
+    test('Minimum cubes per game', () => {
+        let game = new Game(1, [
+            new Round(0,0,4),
+            new Round(1,0,0)
+        ])
+        result = game.minCubes
+        expect(result.red).toBe(1)
+        expect(result.green).toBe(0)
+        expect(result.blue).toBe(4)
+    })
+
+    test('calcuate power per game', () => {
+        let game1 = new Game(1, [
+            new Round(0,0,4),
+            new Round(1,0,3)
+        ])
+        expect(game1.power).toBe(0)
+
+        let game2 = new Game(1, [
+            new Round(0,2,2),
+            new Round(1,0,3)
+        ])
+        expect(game2.power).toBe(6)
+    })
+})

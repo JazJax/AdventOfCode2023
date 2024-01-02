@@ -1,14 +1,14 @@
 const fs = require("fs")
 
 class Bag {
-    constructor(_red, _green, _blue) {
-        this._red = _red
-        this._green = _green
-        this._blue = _blue
+    constructor(red, green, blue) {
+        this.red = red
+        this.green = green
+        this.blue = blue
     }
 
     toString() {
-        return `Red: ${this._red} Green: ${this._green} Blue: ${this._blue}`
+        return `Red: ${this.red} Green: ${this.green} Blue: ${this.blue}`
     }
 }
 
@@ -33,6 +33,8 @@ class Game {
     constructor(id, rounds) {
         this.id = parseInt(id)
         this.rounds = rounds
+        this.minCubes = Game.calculateMinCubes(rounds)
+        this.power = Game.calculatePower(this.minCubes)
     }
 
     isPossible(bag) {        
@@ -45,6 +47,21 @@ class Game {
         return true
     }
 
+    static calculateMinCubes(rounds) {
+        let result = new Bag(0,0,0)
+        for (let i = 0; i < rounds.length ; i++) {
+            let round = rounds[i]
+            result.red = (round.red > result.red) ? round.red : result.red
+            result.green = (round.green > result.green ) ? round.green : result.green 
+            result.blue = (round.blue > result.blue) ? round.blue : result.blue
+        }
+        return result
+    }
+
+    static calculatePower(minCubes) {
+        return minCubes.red * minCubes.green * minCubes.blue
+    }
+
     toString() {
         let string = `Game ID: ${this.id}\n  Round count: ${this.rounds.length}`
         for (let i = 0; i < this.rounds.length ; i++) {
@@ -53,43 +70,13 @@ class Game {
         }
         return string
     }
-
-    static fromString(inputText) {
-        return new Game(Game.parseIdentifier(inputText), Game.parseRounds(inputText))
-    }
-
-    static parseIdentifier(inputText) {
-        let gameIdentifier = inputText
-            .split(":")[0]
-            .substring(5)
-        return gameIdentifier
-    }
-
-    static parseRounds(inputText) {
-        let roundsList = inputText.split(":")[1]
-        let roundStrings = roundsList.split(";")
-        let rounds = roundStrings.map((roundString) => this.parseThrow(roundString))
-        return rounds
-    }
-
-    static parseThrow(throwString) {
-        let red = 0, green = 0, blue = 0
-        let colourStrings = throwString.split(",")
-        colourStrings.forEach(colourString => {
-            colourString = colourString.trim()
-            if (colourString.includes("red")) red = parseInt(colourString)
-            if (colourString.includes("green")) green = parseInt(colourString)
-            if (colourString.includes("blue")) blue = parseInt(colourString)
-        })
-        return new Round(red, green, blue)
-    }
 }
 
 class Round {
-    constructor(_red, _green, _blue) {
-        this.red = _red
-        this.green = _green
-        this.blue = _blue
+    constructor(red, green, blue) {
+        this.red = red
+        this.green = green
+        this.blue = blue
     }
 
     toString() {
@@ -97,7 +84,7 @@ class Round {
     }
 
     isPossible(bag) {
-        return bag._red >= this.red && bag._green >= this.green && bag._blue >= this.blue
+        return bag.red >= this.red && bag.green >= this.green && bag.blue >= this.blue
     }
 }
 
