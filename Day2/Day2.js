@@ -1,5 +1,7 @@
-console.log(`The solution for Day 2, part 1 is ${Day2a()}`)
-console.log(`The solution for Day 2, part 2 is ${Day2b()}`)
+const { Bag, Game, Round, Conundrum, Parser} = require("./Bag.js");
+
+console.log(Day2a())
+console.log(Day2b())
 
 function Day2a() {
     /*
@@ -8,12 +10,13 @@ function Day2a() {
     - When given a list of games, e.g.: ...
     - What is the sum of the IDs of the possible games?
     */
-    const { Bag, Game, Round, Conundrum, Parser} = require("./Bag.js");
-
-    return answer = new Conundrum(
+    
+    let answer = new Conundrum(
         new Bag(12,13,14),
-        Parser.parseGamesFile('input.txt')
+        Parser.parseGamesFile('./input.txt')
         ).Solve()
+
+    return `The solution for Day 2, part 1 is ${answer}`
 }
 
 function Day2b() {
@@ -22,14 +25,15 @@ function Day2b() {
     - The power of a set is the red, green and blue values multiplied together
     - What's the sum of the power of these sets?
     */
-    const { Bag, Game, Round, Conundrum, Parser} = require("./Bag.js");
 
-    let gamesList = Parser.parseGamesFile('input.txt')
+    let gamesList = Parser.parseGamesFile('./input.txt')
     let totalPower = 0
 
     gamesList.forEach( (game) => {
         totalPower += game.power
     })
 
-    return totalPower
+    return `The solution for Day 2, part 2 is ${totalPower}`
 }
+
+module.exports = {Day2a, Day2b}
