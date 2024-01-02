@@ -1,4 +1,5 @@
-const { Bag, Game, Round, Conundrum} = require("./Bag.js");
+const { Bag, Game, Round, Conundrum, Parser} = require("./Bag.js");
+const fs = require("fs")
 
 
 describe('Testing if a round is possible', function () {
@@ -101,32 +102,58 @@ describe('Parsing input file row', function () {
     // Decided no need to test for invalid inputs at this stage
 
     test('Game ID can be parsed from input row', () => {
-        let game1 = Game.fromString(inputText1)
-        expect(game1.id).toBe("9")
+        let game1 = Parser.parseGame(inputText1)
+        expect(game1.id).toBe(9)
 
-        let game2 = Game.fromString(inputText2)
-        expect(game2.id).toBe("1429")
+        let game2 = Parser.parseGame(inputText2)
+        expect(game2.id).toBe(1429)
     })
 
     test('Correct number of games parsed from input row', () => {
-        let game1 = Game.fromString(inputText1)
+        let game1 = Parser.parseGame(inputText1)
         expect(game1.rounds.length).toBe(4)
 
-        let game2 = Game.fromString(inputText2)
+        let game2 = Parser.parseGame(inputText2)
         expect(game2.rounds.length).toBe(3)
     })
 
     test('Throw colours parsed correctly from input row', () => {
-        let game1 = Game.fromString(inputText1)
+        let game1 = Parser.parseGame(inputText1)
         expect(game1.rounds[0].red).toBe(1)
         expect(game1.rounds[2].blue).toBe(5)
 
-        let game2 = Game.fromString(inputText2)
+        let game2 = Parser.parseGame(inputText2)
         expect(game2.rounds[1].green).toBe(4)
         expect(game2.rounds[0].green).toBe(0)
     })
+})
 
-    // test('name', () => {
-        
-    // })
+describe('Parsing input file', () => {
+    const filePath = 'input.test.txt'
+    
+    test('We can load input file from filesystem', () => {
+        let result = Parser.parseGamesFile(filePath)
+        expect(result[0].id).toBe(1)
+    })
+
+    test('We can split the input file into lines', () => {
+        let result = Parser.parseGamesFile(filePath)
+        expect(result.length).toBe(4)
+    })
+
+    test('We can parse a line of input as a game', () => {
+        let gamesList = Parser.parseGamesFile(filePath)
+        let game = gamesList[2]
+        expect(game.id).toBe(3)
+        expect(game.rounds.length).toBe(6)
+        expect(game.rounds[1].red).toBe(4)
+        expect(game.rounds[1].green).toBe(8)
+        expect(game.rounds[1].blue).toBe(11)
+    })
+
+    test('the parser will convert the input file into a list of games', () => {
+        let result = Parser.parseGamesFile(filePath)
+        expect(result[3].id).toBe(4)
+        expect(result[1].rounds[0].green).toBe(8)
+    })
 })

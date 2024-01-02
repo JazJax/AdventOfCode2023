@@ -2,9 +2,10 @@
   "name": "day2",
   "version": "1.0.0",
   "description": "",
-  "main": "Problem.js",
+  "main": "Bag.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node Day2.js"
   },
   "keywords": [],
   "author": "",

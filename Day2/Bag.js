@@ -1,3 +1,5 @@
+const fs = require("fs")
+
 class Bag {
     constructor(_red, _green, _blue) {
         this._red = _red
@@ -29,7 +31,7 @@ class Conundrum {
 
 class Game {
     constructor(id, rounds) {
-        this.id = id
+        this.id = parseInt(id)
         this.rounds = rounds
     }
 
@@ -99,4 +101,48 @@ class Round {
     }
 }
 
-module.exports = { Bag, Game, Round, Conundrum } 
+class Parser {
+
+    static parseGamesFile(filePath) {
+        let parsedRows = fs.readFileSync(filePath, 'utf8').split("\n")
+        return parsedRows.map((row) => Parser.parseGame(row))
+    }
+    
+    static parseGame(inputText) {
+        let gameId = inputText.split(":")[0].substring(5)
+        
+        let roundsList = inputText.split(":")[1]
+        let roundStrings = roundsList.split(";")
+        let rounds = roundStrings.map((roundString) => Parser.parseRound(roundString))
+
+        return new Game(gameId, rounds)
+    }
+
+    static parseGameId(inputText) {
+        let gameIdentifier = inputText
+            .split(":")[0]
+            .substring(5)
+        return gameIdentifier
+    }
+
+    static parseRoundList(inputText) {
+        let roundsList = inputText.split(":")[1]
+        let roundStrings = roundsList.split(";")
+        let rounds = roundStrings.map((roundString) => Parser.parseRound(roundString))
+        return rounds
+    }
+
+    static parseRound(throwString) {
+        let red = 0, green = 0, blue = 0
+        let colourStrings = throwString.split(",")
+        colourStrings.forEach(colourString => {
+            colourString = colourString.trim()
+            if (colourString.includes("red")) red = parseInt(colourString)
+            if (colourString.includes("green")) green = parseInt(colourString)
+            if (colourString.includes("blue")) blue = parseInt(colourString)
+        })
+        return new Round(red, green, blue)
+    }
+}
+
+module.exports = { Bag, Game, Round, Conundrum, Parser } 
