@@ -23,3 +23,24 @@ def process_file(filepath):
     file = load_file(filepath)
     input_array = split_inputs(file)
     return sum_inputs(input_array)
+
+def find_next_numberstring(string):
+    digits = {
+        'one': 1, 'two': 2, 'three': 3,
+        'four': 4, 'five': 5, 'six': 6,
+        'seven': 7, 'eight': 8, 'nine': 9
+    }
+    first_letters = ['o','t','f','s','e','n']
+    input_length = len(string)
+
+    for i, character in enumerate(string):
+        substr_len = 1
+        if character not in first_letters:
+            continue
+        while i + substr_len <= input_length:
+            substr = string[i:i+substr_len]
+            if substr in digits:
+                return digits.get(substr)
+            substr_len += 1
+
+    return '##'

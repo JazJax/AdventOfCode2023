@@ -33,3 +33,16 @@ def test_sum_inputs():
 def test_process_file():
     filepath  = 'test_input.txt'
     assert process_file(filepath) == 263
+
+def test_find_next_numberstring():
+    # string = 'xtwone3four'
+    # assert parse_numbers(string) == 'x2ne34'
+
+    test_cases = {
+        'two':2, 'three':3, 'xtwo':2, 'xtwox':2,
+        '8jdeqw89joneone':1, 'oneight':1, 'sixteen':6
+    }
+
+    for key, value in test_cases.items():
+        print(f'Testing {key} returns {value}')
+        assert find_next_numberstring(key) == value
