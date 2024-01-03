@@ -15,16 +15,21 @@ def test_load_file():
 sevensddvc73three
 9986fmfqhdmq8"""
 
-def test_split_file():
+def test_split_inputs():
     input = """nine92jnhgqzctpgbcbpz
 sevensddvc73three
 9986fmfqhdmq8"""
-    result = split_file(input)
+    result = split_inputs(input)
     assert result[0] == 'nine92jnhgqzctpgbcbpz'
     assert result[-1] == '9986fmfqhdmq8'
     assert len(result) == 3
 
-def test_sum_file():
+def test_sum_inputs():
     input = ['nine92jnhgqzctpgbcbpz','9986fmfqhdmq8']
     assert extract_number(input[0]) == 92
     assert extract_number(input[1]) == 98
+    assert sum_inputs(input) == 190
+
+def test_process_file():
+    filepath  = 'test_input.txt'
+    assert process_file(filepath) == 263

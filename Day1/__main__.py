@@ -1,4 +1,4 @@
-from Day1.code import *
+from code import *
 
 def Day_1a():
     """
@@ -12,7 +12,7 @@ def Day_1a():
 
     Find the sum of all calibration values
     """
-    print(f'The sum of all calibration values is: {extract_number()}')
+    print(f"The sum of all calibration values is: {process_file('input.txt')}")
 
 if __name__ == "__main__":
     Day_1a()
